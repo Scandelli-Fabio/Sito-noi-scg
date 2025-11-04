@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+   <head>
+        <title>SCG Calcio</title>
+        
+        <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <style>
+                    .navbar {
+      width: 100%;
+      background: linear-gradient(90deg, #0f2027, darkorchid);
+      padding: 20px 40px;
+      display: flex;
+      gap: 100px;
+      align-items: center ;
+      
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 10px 15px rgba(0,0,0,0.5);
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 25px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: white;
+      font-size: 1rem;
+      font-weight: 500;
+      position: relative;
+      transition: color 0.3s ease;
+    }
+
+    /* Effetto hover con underline animato */
+    .nav-links a::after {
+      content: "";
+      position:absolute ;
+      left: 0;
+      bottom: -5px;
+      width: 0%;
+      height: 2px;
+      background: #684804;
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: #684804;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+
+
+ 
+
+    /* Responsive (menu hamburger) */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        width: 100%;
+        flex-direction: column;
+        background: #1a1a1a;
+        padding: 20px;
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .hamburger {
+        display: block;
+        cursor: pointer;
+        font-size: 1.8rem;
+      }
+    }
+
+    .hamburger {
+      display: none;
+      color: white;
+    }
+       * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+        body {
+      font-family: Arial, sans-serif;
+      background: #ffffff;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    select {
+      display: block;
+      margin: 0 auto 30px auto;
+      padding: 8px;
+      font-size: 16px;
+    }
+    .card-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+    }
+    .match-card {
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      padding: 20px;
+      width: 250px;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+    .match-card:hover {
+      transform: translateY(-5px);
+    }
+    .teams {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      margin-bottom: 10px;
+    }
+    .teams img {
+      width: 50px;
+      height: 50px;
+    }
+    .vs {
+      font-weight: bold;
+      font-size: 18px;
+      color: #333;
+    }
+    .match-info {
+      font-size: 14px;
+      color: #555;
+    }
+    </style>
+    <body style="background: linear-gradient(90deg, #0f2027, darkorchid);">
+          <nav class="navbar">
+    <div class="logo"><img src="logo.png" height="100" width="100"></div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="giocatori.html">Prima squadra</a>
+      <a href="calendario.html">Calendario</a>
+      <a href="#">Info e contatti</a>
+      <a href="notizie.html">Notizie</a>
+    </div>
+    
+    <div class="hamburger">&#9776;</div>
+  </nav>
+  <h1 style="color: white;"><b>Calendario Partite</b></h1>
+
+ 
+  <select id="competizione">
+    <option value="c1">C1</option>
+    <option value="c2">C2</option>
+    
+  </select>
+
+  <div class="card-container" id="cardContainer">
+    <!-- Le partite appariranno qui -->
+  </div>
+<script>
+    const calendario = {
+      c1: [
+        { data: "Unknown", avversario: "Unknown", luogo: "Unknown", logo: "" },
+        { data: "Unknown", avversario: "Unknown", luogo: "Unknown", logo: "" }
+      ],
+      c2: [
+        { data: "Unknown", avversario: "Unknown", luogo: "Unknown", logo: "" },
+        { data: "Unknown", avversario: "Unknown", luogo: "Unknown", logo: "" }
+      ],
+      
+    };
+
+    const select = document.getElementById("competizione");
+    const container = document.getElementById("cardContainer");
+
+    function mostraPartite(competizione) {
+      container.innerHTML = "";
+      calendario[competizione].forEach(partita => {
+        const card = document.createElement("div");
+        card.classList.add("match-card");
+        card.innerHTML = `
+          <div class="teams">
+            <img src="logo.png" alt="Scg Calcio">
+            <span class="vs">VS</span>
+            <img src="${partita.logo}" alt="${partita.avversario}">
+          </div>
+          <div class="match-info">
+            <p><strong>${partita.avversario}</strong></p>
+            <p>Data: ${partita.data}</p>
+            <p>Luogo: ${partita.luogo}</p>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // Mostra partite iniziali
+    mostraPartite(select.value);
+
+    select.addEventListener("change", () => {
+      mostraPartite(select.value);
+    });
+  </script>
+
+    </body>
+</html>
